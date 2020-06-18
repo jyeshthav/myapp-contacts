@@ -1,0 +1,98 @@
+<head>
+    <title>Contacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'myapp/js/filter.js' %}"></script>
+</head>
+<body>
+
+    {% include "myapp/includes/navbar.html" %}
+
+    {% include "myapp/includes/messages.html" %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col l12">
+                    <h3>Welcome, {{ user.username }}!</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l6">
+                    <button data-target="modal-csv" class="btn light-blue darken-3 modal-trigger"><i class="material-icons left">add</i>Import CSV</button>
+                    <button data-target="modal-con" class="btn light-blue darken-3 modal-trigger"><i class="material-icons left">add</i>Add Contact</button>
+                </div>
+                <div class="input-field col l6 m9 s12">
+                    <i class="material-icons prefix">search</i>
+                    <input id="q" type="text" name="q">
+                    <label for="q">Search...</label>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="container center">
+            <h3>Log in for more features!</h3>
+        </div>
+    {% endif %}
+    
+    {% include "myapp/results.html" %}
+
+    <div id="modal-csv" class="modal">
+        <a href="/" class="modal-close btn-flat right"><i class="material-icons">close</i></a>
+        <div class="container modal-content">
+            <div class="row center">
+                <div class="col l12 m12 s12">
+                    <h3>Add CSV file</h3>
+                    <form action="/add_csv" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col s12">
+                              <div class="file-field input-field">
+                                <div class="btn light-blue darken-3 center">
+                                    <span>File</span>
+                                    <input name="csv_file" type="file"/>
+                                  </div>
+                                  <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                  </div>
+                                <span class="helper-text" data-error="wrong" data-success="right">Only accepts CSV files</span>
+                                <span class="helper-text" data-error="wrong" data-success="right">Order should be _, name, number</span>
+                              </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn light-blue darken-3 center">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-con" class="modal">
+        <a href="/" class="modal-close btn-flat right"><i class="material-icons">close</i></a>
+        <div class="container modal-content">
+            <div class="row center">
+                <div class="col l12 m12 s12">
+                    <h3>Add new Contact</h3>
+                    <form action="/add_contact" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="input-field col s6">
+                              <input id="Name" name="name" type="text" maxlength="150">
+                              <label for="Name">Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                              <input id="Number" name="number" type="tel" minlength="9" maxlength="15">
+                              <label for="Number">Number</label>
+                            </div>
+                          </div>
+                        <button type="submit" class="btn light-blue darken-3 center">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

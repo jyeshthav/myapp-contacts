@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  task1:
+    image: task1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000

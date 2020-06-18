@@ -1,0 +1,34 @@
+<head>
+    <title>Contacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            
+</head>
+<body>
+
+    {% include "myapp/includes/navbar.html" %}
+
+    {% include "myapp/includes/messages.html" %}
+    <div class="container">
+        <div class="row center">
+            <div class="col l3 m1 s0"></div>
+            <div class="col l6 m10 s12">
+            <h3>Sign up here!</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="center">
+                    <button type="submit" class="btn light-blue darken-3 center">Register</button>
+                </div>
+            </form>
+            If you are already a registered user, click here to <a href="/login">Login</a>
+        </div>
+        <div class="col l3 m1 s0"></div>
+    </div>
+</body>
+

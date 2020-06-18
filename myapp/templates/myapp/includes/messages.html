@@ -1,0 +1,23 @@
+<div class="container messages">
+    {% if messages %}
+        {% for m in messages %}
+            {% if m.tags == 'success' %}
+                <script>
+                    M.toast({html: "{{ m }}", classes: 'rounded green darken-3', displayLength:3000})
+                </script>
+            {% elif m.tags == 'error' %}
+                <script>
+                    M.toast({html: "{{ m }}", classes: 'rounded red darken-3', displayLength:3000})
+                </script>
+            {% elif m.tags == 'warning' %}
+                <script>
+                    M.toast({html: "{{ m }}", classes: 'rounded orange darken-3', displayLength:3000})
+                </script>
+            {% elif m.tags == 'info' %}
+                <script>
+                    M.toast({html: "{{ m }}", classes: 'rounded blue darken-3', displayLength:3000})
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

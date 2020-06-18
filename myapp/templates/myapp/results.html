@@ -1,0 +1,42 @@
+<div id="results">
+    <div class="container">
+        <table>
+            <thead>
+                <td><h5>Name</h5></td>
+                <td><h5>Number</h5></td>
+                {% if user.is_authenticated %}
+                <td class="right"><h5>Delete</h5></td>
+                {% endif %}
+            </thead>
+            {% for con in contacts %}
+            <tr>
+                <td>{{ con.name }}</td>
+                <td>{{ con.number }}</td>
+                {% if user.is_authenticated %}
+                <td><i class="delete-btn btn-flat right material-icons" data-name="{{ con.name }}" data-number="{{ con.number }}">delete</i></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.delete-btn').click(function(){
+        var name = $(this).attr('data-name');
+        var number = $(this).attr('data-number');
+
+        $.ajax({
+            type: 'POST',
+            url: '/delete',
+            beforeSend:function (request) {
+                request.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            },
+            data:{name, number},
+            success: function(result){
+                location.reload();
+            },
+        });
+        });
+    })
+</script>
